@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yellow Fish - 伊川谷店</title>
+    <style>
+        body {
+            font-family: 'Meiryo', 'MS PGothic', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+        
+        .header {
+            background-color: #ffde00;
+            color: #333;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            font-weight: bold;
+        }
+        
+        .logo img {
+            height: 30px;
+            margin-right: 10px;
+        }
+        
+        .user-actions {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .user-actions a {
+            text-decoration: none;
+            color: #333;
+        }
+        
+        .sidebar {
+            width: 80px;
+            background-color: #2c3e50;
+            color: white;
+            height: 100vh;
+            float: left;
+        }
+        
+        .sidebar-item {
+            padding: 10px;
+            text-align: center;
+            font-size: 12px;
+            border-bottom: 1px solid #34495e;
+            cursor: pointer;
+        }
+        
+        .sidebar-item.active {
+            background-color: #1a2530;
+        }
+        
+        .main-content {
+            margin-left: 80px;
+            padding: 15px;
+        }
+        
+        .breadcrumb {
+            padding: 10px 0;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .form-container {
+            background-color: #fff;
+            padding: 0;
+            border-radius: 0;
+        }
+        
+        .form-row {
+            display: flex;
+            margin-bottom: 10px;
+            align-items: center;
+            padding: 5px 0;
+        }
+        
+        .form-label {
+            width: 120px;
+            font-size: 14px;
+        }
+        
+        .form-input {
+            flex: 1;
+        }
+        
+        input[type="text"], select, textarea {
+            width: 100%;
+            padding: 6px 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            box-sizing: border-box;
+        }
+        
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        
+        .required {
+            display: inline-block;
+            background-color: #e74c3c;
+            color: white;
+            font-size: 10px;
+            padding: 2px 5px;
+            border-radius: 3px;
+            margin-left: 5px;
+        }
+        
+        .radio-group {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .date-input {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .date-input input {
+            width: 120px;
+        }
+        
+        .date-input button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            padding: 6px;
+            cursor: pointer;
+        }
+        
+        .image-upload {
+            background-color: #eee;
+            padding: 20px;
+            text-align: center;
+            border-radius: 3px;
+            margin-bottom: 10px;
+        }
+        
+        .file-select-button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            padding: 6px 10px;
+            cursor: pointer;
+        }
+        
+        .action-button {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        
+        .primary-button {
+            background-color: #3498db;
+            color: white;
+        }
+        
+        .secondary-button {
+            background-color: #95a5a6;
+            color: white;
+        }
+        
+        .category-section {
+            margin-bottom: 15px;
+        }
+        
+        .category-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+        
+        .category-list {
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            height: 100px;
+            overflow-y: auto;
+            padding: 5px;
+            margin-top: 5px;
+        }
+        
+        .category-item {
+            padding: 3px 5px;
+            cursor: pointer;
+        }
+        
+        .search-box {
+            display: flex;
+            margin-bottom: 10px;
+        }
+        
+        .search-box input {
+            flex: 1;
+            margin-right: 5px;
+        }
+        
+        .search-box button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            padding: 6px 10px;
+            cursor: pointer;
+        }
+        
+        .shop-area {
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            height: 60px;
+            margin-top: 5px;
+        }
+        
+        .right-sidebar {
+            float: right;
+            width: 300px;
+            margin-left: 20px;
+        }
+        
+        .main-form {
+            margin-right: 320px;
+        }
+        
+        h4 {
+            margin: 10px 0;
+            font-size: 14px;
+        }
+        
+        .section-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .dropdown-toggle {
+            padding: 3px 8px;
+            font-size: 12px;
+        }
+        
+        .calendar-button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 3px;
+            display: inline-block;
+            text-align: center;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo">
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 100 100">
+                <circle cx="20" cy="50" r="15" fill="#ffde00"/>
+                <circle cx="50" cy="50" r="15" fill="#ffde00"/>
+                <circle cx="80" cy="50" r="15" fill="#ffde00"/>
+            </svg>
+            伊川谷店
+        </div>
+        <div class="user-actions">
+            <a href="#">管理者</a>
+            <a href="#">ログアウト</a>
+        </div>
+    </div>
+    
+    <div class="sidebar">
+        <div class="sidebar-item active">
+            商品管理
+        </div>
+        <div class="sidebar-item">
+            会員管理
+        </div>
+        <div class="sidebar-item">
+            注文管理
+        </div>
+        <div class="sidebar-item">
+            統計情報
+        </div>
+        <div class="sidebar-item">
+            設定
+        </div>
+        <div class="sidebar-item">
+            レポート
+        </div>
+        <div class="sidebar-item">
+            ヘルプ
+        </div>
+        <div class="sidebar-item">
+            売上グラフ
+        </div>
+    </div>
+    
+    <div class="main-content">
+        <div class="breadcrumb">
+            商品管理 &gt; 商品登録
+        </div>
+        
+        <div class="right-sidebar">
+            <div class="form-container">
+                <div class="category-section">
+                    <div class="category-header">
+                        <h4>カテゴリ</h4>
+                        <button class="action-button secondary-button dropdown-toggle">▼</button>
+                    </div>
+                    <div class="search-box">
+                        <input type="text" placeholder="検索...">
+                        <button><i class="fas fa-search"></i></button>
+                    </div>
+                    <div class="category-list">
+                        <div class="category-item">すべてのカテゴリ</div>
+                        <div class="category-item">- レジャー・アウトドア</div>
+                        <div class="category-item">-- キャンプ用品</div>
+                        <div class="category-item">--- テント</div>
+                        <div class="category-item">--- 寝袋</div>
+                        <div class="category-item">- 家電</div>
+                        <div class="category-item">-- スマートフォン</div>
+                        <div class="category-item">-- パソコン</div>
+                        <div class="category-item">- その他カテゴリ</div>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 20px;">
+                    <h4>インターネットアクセス</h4>
+                    <button class="action-button secondary-button" style="width: 100%; margin-bottom: 5px;">クリックテスト</button>
+                    <button class="action-button secondary-button" style="width: 100%; margin-bottom: 5px;">ポアゾン発生</button>
+                    <button class="action-button secondary-button" style="width: 100%; margin-bottom: 5px;">自動販売再開</button>
+                    <button class="action-button secondary-button" style="width: 100%;">外部発送</button>
+                </div>
+                
+                <div style="margin-top: 20px;">
+                    <h4>登録日・更新日</h4>
+                    <div style="font-size: 13px; margin-bottom: 5px;">
+                        <i class="fas fa-calendar"></i> 登録日：
+                    </div>
+                    <div style="font-size: 13px; margin-bottom: 5px;">
+                        <i class="fas fa-calendar"></i> 更新日：
+                    </div>
+                    <div style="font-size: 13px;">
+                        <i class="fas fa-user"></i> 最終更新者：
+                    </div>
+                </div>
+                
+                <div style="margin-top: 20px;">
+                    <h4>ショップ用メモ</h4>
+                    <div class="shop-area"></div>
+                </div>
+                
+                <div style="margin-top: 20px;">
+                    <h4>備考欄</h4>
+                    <select style="width: 100%;">
+                        <option value="">選択してください</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        
+        <div class="main-form">
+            <div class="form-container">
+                <div class="form-row">
+                    <div class="form-label">商品コード</div>
+                    <div class="form-input">
+                        <input type="text" name="product_code">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-label">メーカー名</div>
+                    <div class="form-input">
+                        <select name="manufacturer">
+                            <option value="">選択</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-label">商品名 <span class="required">必須</span></div>
+                    <div class="form-input">
+                        <input type="text" name="product_name" placeholder="例: スマートフォン">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-label">商品画像</div>
+                    <div class="form-input">
+                        <div class="image-upload">
+                            画像をドラッグ＆ドロップまたは
+                            <button class="file-select-button">ファイルを選択</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-label">ランク</div>
+                    <div class="form-input">
+                        <div class="radio-group">
+                            <label><input type="radio" name="rank" value="N"> N</label>
+                            <label><input type="radio" name="rank" value="A"> A</label>
+                            <label><input type="radio" name="rank" value="AB"> AB</label>
+                            <label><input type="radio" name="rank" value="B"> B</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-label">商品説明</div>
+                    <div class="form-input">
+                        <textarea name="description" placeholder="商品の詳細説明を入力してください。"></textarea>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-label">商品説明（一覧）</div>
+                    <div class="form-input">
+                        <textarea name="short_description" placeholder="ここに入力してください。"></textarea>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-label">有効価格 <span class="required">必須</span></div>
+                    <div class="form-input">
+                        <input type="text" name="price" value="¥">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-label">販売価格1</div>
+                    <div class="form-input" style="display: flex; gap: 10px; align-items: center;">
+                        <select name="price_type1" style="width: 150px;">
+                            <option value="">選択</option>
+                        </select>
+                        <span>税込 ¥</span>
+                        <input type="text" name="price_value1" style="width: 150px;">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-label">販売価格2</div>
+                    <div class="form-input" style="display: flex; gap: 10px; align-items: center;">
+                        <select name="price_type2" style="width: 150px;">
+                            <option value="">選択</option>
+                        </select>
+                        <span>税込 ¥</span>
+                        <input type="text" name="price_value2" style="width: 150px;">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-label">販売開始日</div>
+                    <div class="form-input">
+                        <div class="date-input">
+                            <input type="text" name="start_date" placeholder="年/月/日">
+                            <button class="calendar-button">📅</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-label">在庫数 <span class="required">必須</span></div>
+                    <div class="form-input">
+                        <input type="text" name="stock">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-label">責任店舗</div>
+                    <div class="form-input">
+                        <select name="responsible_store">
+                            <option value="">選択</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-label">現在店舗</div>
+                    <div class="form-input">
+                        <select name="current_store">
+                            <option value="">選択</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-label">発売日 <span class="required">必須</span></div>
+                    <div class="form-input">
+                        <div class="date-input">
+                            <input type="text" name="release_date" placeholder="年/月/日">
+                            <button class="calendar-button">📅</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-label">会社名</div>
+                    <div class="form-input">
+                        <select name="company">
+                            <option value="">選択</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-label">廃棄日</div>
+                    <div class="form-input">
+                        <div class="date-input">
+                            <input type="text" name="disposal_date" placeholder="年/月/日">
+                            <button class="calendar-button">📅</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-label">公開状態 <span class="required">必須</span></div>
+                    <div class="form-input">
+                        <select name="publish_status">
+                            <option value="">選択</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-label">フラグ</div>
+                    <div class="form-input">
+                        <div class="radio-group">
+                            <label><input type="radio" name="flag" value="on"> オン</label>
+                            <label><input type="radio" name="flag" value="off"> オフ</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-label">販売中フラグ <span class="required">必須</span></div>
+                    <div class="form-input">
+                        <div class="radio-group">
+                            <label><input type="radio" name="sale_flag" value="yes"> 販売中</label>
+                            <label><input type="radio" name="sale_flag" value="no"> 販売なし</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-label"></div>
+                    <div class="form-input">
+                        <button class="action-button primary-button">商品を登録</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
