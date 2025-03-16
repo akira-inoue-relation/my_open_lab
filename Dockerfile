@@ -18,8 +18,8 @@ WORKDIR /app
 # Copy HTML file
 COPY ./public/index.html /var/www/html/
 
-# Expose port 8080
-EXPOSE 8080
+# Expose port 80
+EXPOSE 80
 
 # Start nginx
 CMD ["nginx", "-g", "daemon off;"]
