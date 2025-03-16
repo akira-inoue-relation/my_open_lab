@@ -4,15 +4,22 @@ FROM ubuntu:22.04
 # Avoid prompts from apt
 ENV DEBIAN_FRONTEND=noninteractive
 
-# Update package lists and install basic utilities
+# Update package lists and install basic utilities and nginx
 RUN apt-get update && apt-get install -y \
     curl \
     wget \
     git \
+    nginx \
     && rm -rf /var/lib/apt/lists/*
 
 # Set working directory
 WORKDIR /app
 
-# Command to run when container starts
-CMD ["/bin/bash"]
+# Copy HTML file
+COPY ./public/index.html /var/www/html/
+
+# Expose port 8080
+EXPOSE 8080
+
+# Start nginx
+CMD ["nginx", "-g", "daemon off;"]
