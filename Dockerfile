@@ -1,34 +1,35 @@
-# 第1ステージ：ビルド用
-FROM openjdk:17-jdk-slim
-# FROM maven:3.4.1-eclipse-temurin-17 AS build
+# ============================
+# 1. フロントエンド ビルドステージ
+# ============================
+FROM node:20 AS frontend-build
+WORKDIR /app
+COPY app/ .
 
+RUN cd src/main/resources/frontend
+RUN rm -rf node_modules package-lock.json
+RUN npm install
+
+# ============================
+# 2. バックエンド ビルドステージ
+# ============================
+FROM maven:3.9.4-eclipse-temurin-17 AS backend-build
 WORKDIR /app
 
-# nvm install
-RUN nvm install 23.3.0
-
-# Install system dependencies
-RUN apt-get update && \
-    apt-get install -y maven && \
-    apt-get clean
-
-# Clear cache
-RUN apt-get clean && rm -rf /var/lib/apt/lists/*
-
+# フロントのビルド成果物をSpring Bootにコピー
 COPY app/ .
-COPY app-build.sh .
-RUN chmod +x app-build.sh
-# RUN mvn clean package -DskipTests
-RUN ./app-build.sh 
+COPY --from=frontend-build /app/target/ target
 RUN ls
 
-# 第2ステージ：本番環境用
-# FROM openjdk:17-jdk-slim
-# WORKDIR /app
-RUN ls
-# COPY app/target/app-0.0.1-SNAPSHOT.jar app.jar
+# バックエンドコードをコピーしてビルド
+RUN mvn clean -f pom.xml
+RUN mvn package -f pom.xml
+
+# ============================
+# 3. 実行ステージ（軽量 JDK）
+# ============================
+FROM eclipse-temurin:17-jdk
+WORKDIR /app
+COPY --from=backend-build /app/target/*.jar app.jar
+
 # EXPOSE 8080
-
 ENTRYPOINT ["java", "-jar", "app.jar"]
-# RUN ./mvnw -DoutputFile=target/mvn-dependency-list.log -B -DskipTests clean dependency:list install
-# CMD ["sh", "-c", "java -jar target/*.jar"]
