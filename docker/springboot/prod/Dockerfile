@@ -12,6 +12,7 @@ WORKDIR /tmp
 
 # アプリ一式をコピー（フロントエンド & バックエンド）
 COPY app/ .
+COPY docker/springboot/prod/application.properties src/main/resources/application.properties
 
 # フロントエンドビルド
 RUN cd src/main/resources/frontend \
