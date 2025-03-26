@@ -5,9 +5,9 @@ FROM node:20 AS frontend-build
 WORKDIR /app
 COPY app/ .
 
-RUN cd src/main/resources/frontend
-RUN rm -rf node_modules package-lock.json
-RUN npm install
+RUN cd src/main/resources/frontend \
+    && rm -rf node_modules package-lock.json \
+    && npm install  
 
 # ============================
 # 2. バックエンド ビルドステージ
@@ -15,12 +15,11 @@ RUN npm install
 FROM maven:3.9.4-eclipse-temurin-17 AS backend-build
 WORKDIR /app
 
-# フロントのビルド成果物をSpring Bootにコピー
+# merge frontend
 COPY app/ .
 COPY --from=frontend-build /app/target/ target
-RUN ls
 
-# バックエンドコードをコピーしてビルド
+# generate package with frontend
 RUN mvn clean -f pom.xml
 RUN mvn package -f pom.xml
 
