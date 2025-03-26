@@ -1,5 +1,6 @@
 # 第1ステージ：ビルド用
-FROM maven:3.4.1-eclipse-temurin-17 AS build
+FROM openjdk:17-jdk-slim
+# FROM maven:3.4.1-eclipse-temurin-17 AS build
 
 WORKDIR /app
 
@@ -20,8 +21,8 @@ RUN ./app-build.sh
 RUN ls
 
 # 第2ステージ：本番環境用
-FROM openjdk:17-jdk-slim
-WORKDIR /app
+# FROM openjdk:17-jdk-slim
+# WORKDIR /app
 RUN ls
 COPY app/target/app-0.0.1-SNAPSHOT.jar app.jar
 # EXPOSE 8080
