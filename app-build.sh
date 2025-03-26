@@ -14,7 +14,7 @@ npm run build
 
 # create package
 mvn clean -f "$app_dir/pom.xml"
-# mvn package -f "$app_dir/pom.xml"
+mvn package -f "$app_dir/pom.xml"
 
 cd $src_dir
 exit 0
