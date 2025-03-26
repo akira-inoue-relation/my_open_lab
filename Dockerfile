@@ -4,10 +4,12 @@ FROM openjdk:17-jdk-slim
 
 WORKDIR /app
 
+# nvm install
+RUN nvm install 23.3.0
+
 # Install system dependencies
 RUN apt-get update && \
     apt-get install -y maven && \
-    apt-get nodejs && \
     apt-get clean
 
 # Clear cache
