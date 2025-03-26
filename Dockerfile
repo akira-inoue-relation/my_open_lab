@@ -30,11 +30,5 @@ RUN mkdir -p /app \
 # 実行ディレクトリに移動
 WORKDIR /app
 
-# ポートを開放
-# EXPOSE 8080
-
-# アプリ起動
-# CMD ["java", "-jar", "app.jar"]
-
 # Spring Boot アプリを起動
 ENTRYPOINT ["java", "-jar", "app.jar"]
