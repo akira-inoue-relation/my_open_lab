@@ -1,34 +1,29 @@
-# ============================
-# 1. フロントエンド ビルドステージ
-# ============================
-FROM node:20
+# Maven 3.9.9 + OpenJDK 17 ベース
+FROM maven:3.9.9-eclipse-temurin-17
+
+# Node.js v18.20.7 と npm 9.8.1 をインストール
+RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
+    && apt-get install -y nodejs \
+    && npm install -g npm@9.8.1 \
+    && node -v && npm -v && mvn -v
+
+# 作業ディレクトリ
 WORKDIR /app
+
+# アプリ一式をコピー（バックエンド + フロントエンド含む）
 COPY app/ .
 
+# フロントエンド依存をインストールしてビルド
 RUN cd src/main/resources/frontend \
     && rm -rf node_modules package-lock.json \
-    && npm install  
+    && npm install \
+    && npm run build
 
-# ============================
-# 2. バックエンド ビルドステージ
-# ============================
-FROM maven:3.9.4-eclipse-temurin-17
-WORKDIR /app
+# Spring Boot アプリをビルド
+RUN mvn clean package -DskipTests
 
-# merge frontend
-COPY app/ .
-COPY --from=0 /app/target/ target
+# ポートを開放
+# EXPOSE 8080
 
-# generate package with frontend
-RUN mvn clean -f pom.xml
-RUN mvn package -f pom.xml
-
-# ============================
-# 3. 実行ステージ（軽量 JDK）
-# ============================
-FROM eclipse-temurin:17-jdk
-WORKDIR /app
-COPY --from=1 /app/target/*.jar app.jar
-
-EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "app.jar"]
+# アプリを起動
+CMD ["java", "-jar", "target/app.jar"]
