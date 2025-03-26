@@ -1,15 +1,19 @@
-# 第1ステージ：ビルド用
-FROM maven:3.4.1-eclipse-temurin-17 AS build
-WORKDIR /app
-COPY app/ .
-COPY app-build.sh .
-RUN chmod +x app-build.sh
-# RUN mvn clean package -DskipTests
-RUN ./app-build.sh 
+# Use the Eclipse alpine official image
+# https://hub.docker.com/_/eclipse-temurin
+FROM eclipse-temurin:21-jdk-alpine
 
-# 第2ステージ：本番環境用
-FROM openjdk:17-jdk-slim
+# Install Node.js
+RUN apk add --no-cache nodejs npm
+
+# Create and change to the app directory.
 WORKDIR /app
-COPY ./app/target/app-0.0.1-SNAPSHOT.jar app.jar
-EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "app.jar"]
+
+# Copy files to the container image
+COPY . ./
+
+# Build the app.
+RUN ./mvnw -DoutputFile=target/mvn-dependency-list.log -B -DskipTests clean dependency:list install
+
+# Run the app by dynamically finding the JAR file in the target directory
+CMD ["sh", "-c", "java -jar target/*.jar"]
+

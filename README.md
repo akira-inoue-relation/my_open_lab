@@ -1,56 +1,20 @@
-# 環境構築手順
+---
+title: Java Spring Boot
+description: A Spring Boot starter app.
+tags:
+  - Java
+  - Spring
+  - Spring Boot
+---
 
-## 前提として以下をインストールする
-### Maven
-3.9.9
-### Node
-v18.20.7
-### npm
-9.8.1
+# Spring Boot Starter Example
 
-## フロント
-#### Node Moduleのインストール
-```
-rm -rf node_modules package-lock.json
-npm install
-```
-#### フロントエンドの実装をBuild
-```
-cd app/src/main/resources/frontend
-npm run build
-```
+This is a [Spring Boot](https://spring.io/projects/spring-boot) starter app that deploys to Railway.
 
-### Docker起動（バインドマウント使用） 立ち上げは５分前後かかります
-```
-docker-compose up -d
-```
+[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/new/template/fWEWWf)
 
-### 起動確認
-### http://localhost:8080 にアクセスしてログイン画面が表示されれば成功
+## ✨ Features
 
-
-### 開発環境の停止
-```
-docker-compose down
-```
-
-## VSCodeでのデバッグ方法
-### バックエンド
-デバッグ
-1. VSCodeを開く
-2. 左側のサイドバーからRun and Debugアイコンをクリック
-3. 「Debug Spring Boot (Remote)」を選択して実行
-4. ブレークポイントを設定してデバッグ可能
-修正
-1. 修正箇所を直す
-2. dockerを停止 + 再起動
-
-### フロントエンド
-修正
-1. 修正箇所を直す
-2. 再度ビルドする
-3. ブラウザでページを更新する
-
-
-
-
+- Java
+- Spring Boot
+- Spring
