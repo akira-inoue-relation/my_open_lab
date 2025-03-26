@@ -22,12 +22,14 @@ RUN cd src/main/resources/frontend \
 # Spring Boot アプリをビルド
 RUN mvn clean package -DskipTests
 
-# ✅ app.jar を /app に移動し、それ以外の全てを削除
-RUN mv target/*.jar app.jar \
-    && find . ! -name 'app.jar' -mindepth 1 -exec rm -rf {} +
+# # ✅ app.jar を /app に移動し、それ以外の全てを削除
+# RUN mv target/*.jar app.jar \
+#     && find . ! -name 'app.jar' -mindepth 1 -exec rm -rf {} +
+
+RUN mv target/*.jar app.jar
 
 # ポートを開放
 # EXPOSE 8080
 
 # Spring Boot アプリを起動
-CMD ["java", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-jar", "app.jar"]
