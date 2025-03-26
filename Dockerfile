@@ -8,7 +8,7 @@ RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
     && node -v && npm -v && mvn -v
 
 # 作業ディレクトリ
-WORKDIR /app
+WORKDIR /tmp
 
 # アプリ一式をコピー（バックエンド + フロントエンド含む）
 COPY app/ .
@@ -22,11 +22,9 @@ RUN cd src/main/resources/frontend \
 # Spring Boot アプリをビルド
 RUN mvn clean package -DskipTests
 
-# # ✅ app.jar を /app に移動し、それ以外の全てを削除
-# RUN mv target/*.jar app.jar \
-#     && find . ! -name 'app.jar' -mindepth 1 -exec rm -rf {} +
-
-RUN mv target/*.jar app.jar
+WORKDIR /
+RUN mv tmp/target/*.jar app/app.jar \
+    && rm -rf tmp
 
 # ポートを開放
 # EXPOSE 8080
