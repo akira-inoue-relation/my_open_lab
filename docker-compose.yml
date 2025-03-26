@@ -23,10 +23,10 @@ services:
       retries: 5
 
   springboot:
-    command: ["sh", "-c", "mv -f docker/springboot/prod/application.properties app/src/main/resources/application.properties"]
+    command: ["sh", "-c", "mv -f docker/springboot/application.properties app/src/main/resources/application.properties"]
     build:
       context: .
-      dockerfile: ./docker/springboot/dev/Dockerfile
+      dockerfile: ./docker/springboot/Dockerfile
     container_name: app-springboot
     depends_on:
       mysql:
