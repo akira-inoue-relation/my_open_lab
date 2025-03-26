@@ -1,25 +1,15 @@
-# Use Ubuntu as the base image
-FROM ubuntu:22.04
-
-# Avoid prompts from apt
-ENV DEBIAN_FRONTEND=noninteractive
-
-# Update package lists and install basic utilities and nginx
-RUN apt-get update && apt-get install -y \
-    curl \
-    wget \
-    git \
-    nginx \
-    && rm -rf /var/lib/apt/lists/*
-
-# Set working directory
+# 第1ステージ：ビルド用
+FROM maven:3.4.1-eclipse-temurin-17 AS build
 WORKDIR /app
+COPY app/ .
+COPY app-build.sh .
+RUN chmod +x app-build.sh
+# RUN mvn clean package -DskipTests
+RUN ./app-build.sh 
 
-# Copy HTML file
-COPY ./public/index.html /var/www/html/
-
-# Expose port 80
-EXPOSE 80
-
-# Start nginx
-CMD ["nginx", "-g", "daemon off;"]
+# 第2ステージ：本番環境用
+FROM openjdk:17-jdk-slim
+WORKDIR /app
+COPY ./app/target/app-0.0.1-SNAPSHOT.jar app.jar
+EXPOSE 8080
+ENTRYPOINT ["java", "-jar", "app.jar"]
